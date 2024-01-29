@@ -8,7 +8,7 @@ import java.io.File
 
 object Config : Vigilant(
     File(GSM.configDirectory, "config.toml"),
-    "Glob's Skyblock Mod"
+    "Glob's Skyblock Mod",
 ) {
     // DUNGEONS CATEGORY
 
@@ -48,6 +48,20 @@ object Config : Vigilant(
     )
     var preventWrongCombination: Boolean = false
 
+    @Property(
+        type = PropertyType.SWITCH, name = "Announce rare drops",
+        description = "Announces rare drops in the same style as Roll 'Em Drops.",
+        category = "QOL", subcategory = "Drops"
+    )
+    var announceRareDrops: Boolean = false
+
+    @Property(
+        type = PropertyType.SWITCH, name = "Automatically copy rare drops",
+        description = "Automatically copies the chat message, when the player gets a rare drop.",
+        category = "QOL", subcategory = "Drops"
+    )
+    var copyRareDrops: Boolean = false
+
     // BAZAAR
     @Property(
         type = PropertyType.SWITCH, name = "Alert upon order update",
@@ -84,6 +98,14 @@ object Config : Vigilant(
         category = "Mining", subcategory = "Crystal Hollows"
     )
     var findFairyGrotto: Boolean = false
+
+    // BESTIARY CATEGORY
+    @Property(
+        type = PropertyType.SWITCH, name = "Enable",
+        description = "Tracks all kills and counts them accordingly to your bestiary progress. §b§c(WIP, SOME KILLS MIGHT BE COUNTED)",
+        category = "Bestiary", subcategory = "Tracker"
+    )
+    var enableBestiaryTracker: Boolean = false
 
     // DEV CATEGORY
     @Property(

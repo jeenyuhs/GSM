@@ -54,7 +54,8 @@ class GSM {
             GUIOpen,
             Data,
             DungeonCommand,
-            SetWaypoint
+            SetWaypoint,
+            TestFeatures
         ).forEach(ClientCommandHandler.instance::registerCommand)
     }
 

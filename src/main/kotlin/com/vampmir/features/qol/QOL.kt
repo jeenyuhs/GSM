@@ -4,6 +4,6 @@ import net.minecraftforge.common.MinecraftForge
 
 object QOL {
     fun initialize() {
-        listOf(WrongBookCombiner, RenderSetWaypoints).forEach(MinecraftForge.EVENT_BUS::register)
+        listOf(WrongBookCombiner, RenderSetWaypoints, Drops).forEach(MinecraftForge.EVENT_BUS::register)
     }
 }
