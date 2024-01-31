@@ -31,11 +31,17 @@ object Drops {
 
         val message = event.message.formattedText ?: return
 
-        if (dropPattern.containsMatchIn(message)) {
+        if (dropPattern.matches(message)) {
             if (GSM.config.announceRareDrops) {
                 val dropType = dropPattern.matchEntire(message)!!.groups["dropType"]!!.value
                 val dropName = dropPattern.matchEntire(message)!!.groups["dropName"]!!.value
                 val magicFind = dropPattern.matchEntire(message)!!.groups["magicFind"]!!.value
+
+                if (GSM.config.ignoredRareDrops.split(", ").find { it == StringUtils.stripControlCodes(dropName) } != null) {
+                    if (GSM.config.hideIgnoredDropsMessages) event.isCanceled = true
+
+                    return
+                }
 
                 val titleNoColor = "§l" + StringUtils.stripControlCodes("$dropType DROP!")
 
@@ -51,7 +57,6 @@ object Drops {
                     .stay(1000f)
                     .fadeOut(200f)
             }
-
             if (GSM.config.copyRareDrops) {
                 GSM.minecraft.thePlayer.chat("${ChatColor.GOLD}[${ChatColor.YELLOW}GSM${ChatColor.GOLD}] ${ChatColor.DARK_GRAY}> ${ChatColor.GOLD}Added drop to clipboard!")
                 Toolkit.getDefaultToolkit().systemClipboard.setContents(StringSelection(event.message.unformattedText), null)

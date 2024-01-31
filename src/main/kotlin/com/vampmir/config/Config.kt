@@ -11,13 +11,26 @@ object Config : Vigilant(
     "Glob's Skyblock Mod",
 ) {
     // DUNGEONS CATEGORY
-
     @Property(
         type = PropertyType.SWITCH, name = "Show Livid",
         description = "Highlights the real Livid.",
         category = "Dungeons", subcategory = "Livid (F5)"
     )
     var highlightLivid: Boolean = false
+
+    @Property(
+        type = PropertyType.SWITCH, name = "Highlight starred mobs",
+        description = "Highlight the required mobs to kill for wither or blood key.",
+        category = "Dungeons", subcategory = "Highlight"
+    )
+    var highlightStarredMobs: Boolean = false
+
+    @Property(
+        type = PropertyType.SWITCH, name = "Highlight Shadow Assasssin",
+        description = "what do you think it does?",
+        category = "Dungeons", subcategory = "Highlight"
+    )
+    var highlightSA: Boolean = false
 
     @Property(
         type = PropertyType.SWITCH, name = "Instant requeue",
@@ -61,6 +74,20 @@ object Config : Vigilant(
         category = "QOL", subcategory = "Drops"
     )
     var copyRareDrops: Boolean = false
+
+    @Property(
+        type = PropertyType.TEXT, name = "Ignored drops",
+        description = "Any drop that is in this list, will be ignored. (all names are split on \", \", like so: \"Enchanted Bone, Carrot\") *CAPITALIZATION IS IMPORTANT*",
+        category = "QOL", subcategory = "Drops"
+    )
+    var ignoredRareDrops: String = ""
+
+    @Property(
+        type = PropertyType.SWITCH, name = "Hide ignored drops messages",
+        description = "When enabled, all the drops from `Ignored drops` will no longer show in chat.",
+        category = "QOL", subcategory = "Drops"
+    )
+    var hideIgnoredDropsMessages: Boolean = false
 
     // BAZAAR
     @Property(

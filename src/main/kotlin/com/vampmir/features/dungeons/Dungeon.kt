@@ -35,7 +35,8 @@ object Dungeon {
             this,
             CloseRewards,
             InstantRequeue,
-            LividSolver
+            LividSolver,
+            Highlighter
         ).forEach(MinecraftForge.EVENT_BUS::register)
     }
 
