@@ -2,23 +2,18 @@ package com.vampmir.utils
 
 import com.vampmir.GSM
 import gg.essential.elementa.font.DefaultFonts
-import gg.essential.universal.ChatColor
 import gg.essential.universal.UGraphics
 import gg.essential.universal.UMatrixStack
 import net.minecraft.client.gui.ScaledResolution
-import net.minecraft.util.StringUtils
 import java.awt.Color
+
 
 
 class TitleRender(
     private var title: String,
     private var subtitle: String,
-    private val fadeIn: Float,
-    private val stay: Float,
-    private val fadeOut: Float,
 ) {
     private val originalTitle = title
-    private val flickerTitle = ChatColor.BOLD + StringUtils.stripControlCodes(title)
 
     private val scaledResolution = ScaledResolution(GSM.minecraft)
     private val scaledWidth = scaledResolution.scaledWidth
@@ -31,47 +26,87 @@ class TitleRender(
         FADE_OUT
     }
 
-    private var state = State.FADE_IN
+    private data class Animation(
+        val type: State,
+        val time: Float,
+
+        val flickerText: String? = null
+    )
+
     private var titleOpacity = 0.0f
     private var lastFrameTime = System.currentTimeMillis()
     private var elapsedTime = 0L
+
+    private var animations: ArrayList<Animation> = ArrayList()
+
+    fun fadeIn(time: Float): TitleRender {
+        animations.add(Animation(type = State.FADE_IN, time = time))
+        return this
+    }
+
+    fun fadeOut(time: Float): TitleRender {
+        animations.add(Animation(type = State.FADE_OUT, time = time))
+        return this
+    }
+
+    fun stay(time: Float): TitleRender {
+        animations.add(Animation(type = State.DISPLAY, time = time))
+        return this
+    }
+
+    fun flicker(flicker: String, flickerFor: Float): TitleRender {
+        animations.add(Animation(
+            type = State.FLICKER,
+            time = flickerFor,
+            flickerText = flicker
+        ))
+        return this
+    }
+
+    private fun getCurrentAnimation(): Animation? {
+        var totalTime = 0f
+        animations.forEach {
+            totalTime += it.time
+
+            if (elapsedTime <= totalTime) {
+                return it
+            }
+        }
+
+        return null
+    }
+
     fun render(matrixStack: UMatrixStack) {
+        val animation = getCurrentAnimation() ?: return
+
         val currentTime = System.currentTimeMillis()
         val deltaTime: Long = currentTime - lastFrameTime // Time since last frame in seconds
         lastFrameTime = currentTime
         elapsedTime += deltaTime
 
-        when (state) {
+
+        when (animation.type) {
             State.FADE_IN -> {
-                titleOpacity += deltaTime / fadeIn // 120ms for full opacity
+                titleOpacity += deltaTime / animation.time // 120ms for full opacity
                 if (titleOpacity >= 1.0f) {
                     titleOpacity = 1.0f
-                    state = State.DISPLAY
                 }
             }
 
             State.DISPLAY -> {
-                if (elapsedTime <= stay) {
-                    state = State.FLICKER
-                }
+                titleOpacity = 1.0f
+                title = originalTitle
             }
 
             State.FLICKER -> {
-                title = if ((elapsedTime / 100f).toInt() % 2 == 0) { // Flicker every 250ms
-                    flickerTitle
-                } else {
-                    originalTitle
-                }
-                if (elapsedTime >= fadeIn + stay) { // Flicker for 1000ms
-                    state = State.FADE_OUT
-                }
+                title = animation.flickerText!!
             }
 
             State.FADE_OUT -> {
-                titleOpacity -= deltaTime / fadeOut // 200ms for full fade out
+                titleOpacity -= deltaTime / animation.time // 200ms for full fade out
+
                 if (titleOpacity <= 0.0f) {
                     titleOpacity = 0.0f
-                    elapsedTime = 0L
                 }
             }
         }

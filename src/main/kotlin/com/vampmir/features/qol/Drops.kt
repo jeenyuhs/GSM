@@ -6,6 +6,7 @@ import com.vampmir.utils.TitleRender
 import com.vampmir.utils.chat
 import gg.essential.universal.ChatColor
 import gg.essential.universal.UMatrixStack
+import net.minecraft.util.StringUtils
 import net.minecraftforge.client.event.ClientChatReceivedEvent
 import net.minecraftforge.client.event.RenderGameOverlayEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
@@ -35,7 +36,20 @@ object Drops {
                 val dropType = dropPattern.matchEntire(message)!!.groups["dropType"]!!.value
                 val dropName = dropPattern.matchEntire(message)!!.groups["dropName"]!!.value
                 val magicFind = dropPattern.matchEntire(message)!!.groups["magicFind"]!!.value
-                title = TitleRender("$dropType DROP!", "$dropName §r§b($magicFind)§r", 120f, 2000f, 200f)
+
+                val titleNoColor = "§l" + StringUtils.stripControlCodes("$dropType DROP!")
+
+                title = TitleRender("$dropType DROP!", "$dropName §r§b($magicFind)§r").fadeIn(120f)
+                    .stay(1000f)
+                    .flicker(titleNoColor, 100f)
+                    .stay(100f)
+                    .flicker(titleNoColor, 100f)
+                    .stay(100f)
+                    .flicker(titleNoColor, 100f)
+                    .stay(50f)
+                    .flicker(titleNoColor, 100f)
+                    .stay(1000f)
+                    .fadeOut(200f)
             }
 
             if (GSM.config.copyRareDrops) {
