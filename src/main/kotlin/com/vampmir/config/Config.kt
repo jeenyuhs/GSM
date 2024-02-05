@@ -12,9 +12,16 @@ object Config : Vigilant(
 ) {
     // DUNGEONS CATEGORY
     @Property(
+        type = PropertyType.SWITCH, name = "Balloon Barrage Helper",
+        description = "Right before Bonzo uses his Balloon Barrage attack, it'll alert the user. Once Bonzo is done using the attack, it'll notify the user.",
+        category = "Dungeons", subcategory = "Balloon (F1/M1)"
+    )
+    var showBalloonTimer: Boolean = false
+
+    @Property(
         type = PropertyType.SWITCH, name = "Show Livid",
         description = "Highlights the real Livid.",
-        category = "Dungeons", subcategory = "Livid (F5)"
+        category = "Dungeons", subcategory = "Livid (F5/M5)"
     )
     var highlightLivid: Boolean = false
 

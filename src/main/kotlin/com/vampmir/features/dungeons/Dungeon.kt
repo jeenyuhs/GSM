@@ -28,7 +28,7 @@ object Dungeon {
 
     var isMM: Boolean = false
 
-    private val floorRegex = Regex(".*\\(F(\\d)\\).*")
+    private val floorRegex = Regex(".*\\([FM](\\d)\\).*")
 
     fun initialize() {
         listOf(
@@ -36,7 +36,8 @@ object Dungeon {
             CloseRewards,
             InstantRequeue,
             LividSolver,
-            Highlighter
+            Highlighter,
+            BalloonTimer
         ).forEach(MinecraftForge.EVENT_BUS::register)
     }
 

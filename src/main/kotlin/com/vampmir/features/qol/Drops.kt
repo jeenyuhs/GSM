@@ -46,15 +46,10 @@ object Drops {
                 val titleNoColor = "§l" + StringUtils.stripControlCodes("$dropType DROP!")
 
                 title = TitleRender("$dropType DROP!", "$dropName §r§b($magicFind)§r").fadeIn(120f)
-                    .stay(1000f)
                     .flicker(titleNoColor, 100f)
-                    .stay(100f)
                     .flicker(titleNoColor, 100f)
-                    .stay(100f)
                     .flicker(titleNoColor, 100f)
-                    .stay(50f)
                     .flicker(titleNoColor, 100f)
-                    .stay(1000f)
                     .fadeOut(200f)
             }
             if (GSM.config.copyRareDrops) {

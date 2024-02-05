@@ -5,13 +5,14 @@ import gg.essential.elementa.font.DefaultFonts
 import gg.essential.universal.UGraphics
 import gg.essential.universal.UMatrixStack
 import net.minecraft.client.gui.ScaledResolution
+import org.dom4j.util.StringUtils
 import java.awt.Color
 
 
 
 class TitleRender(
     private var title: String,
-    private var subtitle: String,
+    private var subtitle: String? = null,
 ) {
     private val originalTitle = title
 
@@ -60,6 +61,34 @@ class TitleRender(
             time = flickerFor,
             flickerText = flicker
         ))
+        animations.add(Animation(type = State.DISPLAY, time = flickerFor))
+        return this
+    }
+
+    fun roll(time: Float): TitleRender {
+        val titleNoColor = net.minecraft.util.StringUtils.stripControlCodes(title)
+        val timeInBetween =  time / titleNoColor.length
+        for (i in titleNoColor.indices) {
+            val builder = StringBuilder()
+
+            if (i > 0) {
+                builder.append("§r§9§l${titleNoColor.substring(0, i)}")
+            }
+
+            builder.append("§r§l${titleNoColor[i]}")
+
+            if (i < titleNoColor.length - 1) {
+                builder.append("§r§9§l${titleNoColor.substring(i + 1)}")
+            }
+
+            animations.add(Animation(
+                type = State.FLICKER,
+                time = timeInBetween + 50,
+                flickerText = builder.toString()
+            ))
+            animations.add(Animation(type = State.DISPLAY, time = timeInBetween))
+        }
+
         return this
     }
 
@@ -127,17 +156,19 @@ class TitleRender(
         )
         matrixStack.pop()
         matrixStack.push()
-        matrixStack.scale(2.0f * 0.7f, 2.0f * 0.7f, 2.0f * 0.7f)
-        DefaultFonts.VANILLA_FONT_RENDERER.drawString(
-            matrixStack,
-            subtitle,
-            Color(255, 255, 255, (titleOpacity * 255).toInt()),
-            (-GSM.minecraft.fontRendererObj.getStringWidth(subtitle) / 2).toFloat(),
-            5f,
-            1f,
-            1f
-        )
-        matrixStack.pop()
+        if (subtitle != null) {
+            matrixStack.scale(2.0f * 0.7f, 2.0f * 0.7f, 2.0f * 0.7f)
+            DefaultFonts.VANILLA_FONT_RENDERER.drawString(
+                matrixStack,
+                subtitle!!,
+                Color(255, 255, 255, (titleOpacity * 255).toInt()),
+                (-GSM.minecraft.fontRendererObj.getStringWidth(subtitle!!) / 2).toFloat(),
+                5f,
+                1f,
+                1f
+            )
+            matrixStack.pop()
+        }
         UGraphics.disableBlend()
         matrixStack.pop()
     }
