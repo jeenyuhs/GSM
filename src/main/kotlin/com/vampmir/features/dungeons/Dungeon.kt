@@ -28,7 +28,7 @@ object Dungeon {
 
     var isMM: Boolean = false
 
-    private val floorRegex = Regex(".*\\([FM](\\d)\\).*")
+    private val floorRegex = Regex(".*\\(([FM])(\\d)\\).*")
 
     fun initialize() {
         listOf(
@@ -61,7 +61,11 @@ object Dungeon {
 
             // use regex to find the floor number.
             if (floorRegex.matches(line) && floor == DungeonFloor.Unknown) {
-                val floorNumber: Int  = floorRegex.matchEntire(line)?.groupValues?.get(1)?.toInt() ?: return@forEach
+                val floorType: String = floorRegex.matchEntire(line)?.groupValues?.get(1) ?: return@forEach
+
+                isMM = floorType == "M"
+
+                val floorNumber: Int  = floorRegex.matchEntire(line)?.groupValues?.get(2)?.toInt() ?: return@forEach
 
                 if (floorNumber > 7 || floorNumber < 1) {
                     GSM.minecraft.thePlayer.debug("Unexpected floor. Parsed floor $floorNumber?")
@@ -83,6 +87,5 @@ object Dungeon {
         fightingBoss = false
         floor = DungeonFloor.Unknown
     }
-
 
 }

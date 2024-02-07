@@ -14,66 +14,66 @@ import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent
 import sun.java2d.SurfaceDataProxy.CountdownTracker
 
 object BalloonTimer {
-    var ticksCur = 0
-    val balloonBarragePos = BlockPos(-43, 73, 20)
-    var timer: Long = 0L
+    private val balloonBarragePos = BlockPos(-43, 73, 20)
+    private var timer: Long = 0L
 
-    var warningTitle: TitleRender? = null
-    var barrageFinishedTitle: TitleRender? = null
+    private var barrageIncomingTitle: TitleRender? = null
+    private var barrageFinishedTitle: TitleRender? = null
 
     @SubscribeEvent
     fun onGameOverlayRender(event: RenderGameOverlayEvent.Text) {
         val matrixStack = UMatrixStack()
-        if (warningTitle != null) {
-            warningTitle!!.render(matrixStack)
-        }
 
-        if (barrageFinishedTitle != null) {
-            barrageFinishedTitle!!.render(matrixStack)
-        }
+        barrageIncomingTitle?.render(matrixStack)
+        barrageFinishedTitle?.render(matrixStack)
     }
 
     @SubscribeEvent
     fun onTick(event: ClientTickEvent) {
-        if (Dungeon.floor != DungeonFloor.Bonzo && !GSM.config.showBalloonTimer) return
+        if (Dungeon.floor != DungeonFloor.Bonzo || !GSM.config.showBalloonTimer) return
         // -43 / 73 / 20
         val nametags = Entity.getEntities<EntityArmorStand>().filter {
             it.name == "§r§lSHOOOOOOOOWWWWWWW TIMEEEEEEE!"
         }
 
         if (!nametags.none()) {
-            if (warningTitle == null) {
-                warningTitle = TitleRender("§c§lBALLOON BARRAGE INCOMING!!!")
+            // alert user
+            barrageFinishedTitle = null
+
+            if (barrageIncomingTitle == null)
+                barrageIncomingTitle = TitleRender("§c§lBALLOON BARRAGE INCOMING!!!")
                     .flicker("§lBALLOON BARRAGE INCOMING!!!", 100f)
                     .flicker("§lBALLOON BARRAGE INCOMING!!!", 100f)
                     .flicker("§lBALLOON BARRAGE INCOMING!!!", 100f)
                     .flicker("§lBALLOON BARRAGE INCOMING!!!", 100f)
                     .flicker("§lBALLOON BARRAGE INCOMING!!!", 100f)
                     .flicker("§lBALLOON BARRAGE INCOMING!!!", 100f)
-            }
 
             // in position, start countdown
-            if (nametags.first().position == balloonBarragePos) {
-                timer = System.currentTimeMillis() + (9 * 1000) // 10 seconds
+            if (nametags.first().position == balloonBarragePos || timer == 0L) {
+                // this is about right....
+                timer = if (!Dungeon.isMM) {
+                    System.currentTimeMillis() + (8 * 1000)
+                } else {
+                    System.currentTimeMillis() + (14 * 1000)
+                }
             }
         }
 
         if (timer - System.currentTimeMillis() <= 0 && timer != 0L) {
-             barrageFinishedTitle = TitleRender("§a§lBalloon barrage finished!").fadeIn(50f)
-                 .stay(250f)
-                 .flicker("§lBalloon barrage finished!", 250f)
-                 .flicker("§lBalloon barrage finished!", 250f)
-                 .flicker("§lBalloon barrage finished!", 250f)
-                 .stay(500f)
-                .fadeOut(100f)
+            barrageIncomingTitle = null
+
+            if (barrageFinishedTitle == null)
+                barrageFinishedTitle = TitleRender("§a§lBalloon barrage attack is done!")
+                    .fadeIn(100f)
+                    .flicker("§lBalloon barrage attack is done!", 100f)
+                    .flicker("§lBalloon barrage attack is done!", 100f)
+                    .flicker("§lBalloon barrage attack is done!", 100f)
+                    .flicker("§lBalloon barrage attack is done!", 100f)
+                    .flicker("§lBalloon barrage attack is done!", 100f)
+                    .fadeOut(100f)
+
             timer = 0
-
-            // just to be sure, make warningTitle null, so if there is another balloon barrage
-            // attack, it will display a new title.
-            warningTitle = null
         }
-
-        ticksCur++
-
     }
 }

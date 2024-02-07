@@ -172,4 +172,9 @@ class TitleRender(
         UGraphics.disableBlend()
         matrixStack.pop()
     }
+
+    fun reset() {
+        elapsedTime = 0L
+        lastFrameTime = System.currentTimeMillis()
+    }
 }
