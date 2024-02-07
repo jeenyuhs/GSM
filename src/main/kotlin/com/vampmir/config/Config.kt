@@ -4,6 +4,7 @@ import com.vampmir.GSM
 import gg.essential.vigilance.Vigilant
 import gg.essential.vigilance.data.Property
 import gg.essential.vigilance.data.PropertyType
+import java.awt.Color
 import java.io.File
 
 object Config : Vigilant(
@@ -33,11 +34,26 @@ object Config : Vigilant(
     var highlightStarredMobs: Boolean = false
 
     @Property(
+        type = PropertyType.COLOR, name = "Shadow Assassin Color",
+        description = "Changes the highlight color of all starred mobs.",
+        category = "Dungeons", subcategory = "Highlight"
+    )
+    var highlightStarredMobsColor: Color = Color(0, 255, 0)
+
+
+    @Property(
         type = PropertyType.SWITCH, name = "Highlight Shadow Assasssin",
         description = "what do you think it does?",
         category = "Dungeons", subcategory = "Highlight"
     )
     var highlightSA: Boolean = false
+
+    @Property(
+        type = PropertyType.COLOR, name = "Shadow Assassin Color",
+        description = "Changes the highlight color of the shadow assassin.",
+        category = "Dungeons", subcategory = "Highlight"
+    )
+    var highlightSAColor: Color = Color(118, 32, 185)
 
     @Property(
         type = PropertyType.SWITCH, name = "Instant requeue",
@@ -96,20 +112,20 @@ object Config : Vigilant(
     )
     var hideIgnoredDropsMessages: Boolean = false
 
-    // BAZAAR
-    @Property(
-        type = PropertyType.SWITCH, name = "Alert upon order update",
-        description = "Alerts the player, if their order is outdated or matched.",
-        category = "Bazaar"
-    )
-    var alertWhenOrderUpdate: Boolean = false
-
-    @Property(
-        type = PropertyType.SWITCH, name = "Alert periodically",
-        description = "If `update upon order update` and this is enabled, it will periodically alert the player (every 2 minutes).",
-        category = "Bazaar"
-    )
-    var alertOrderUpdatePeriodically: Boolean = false
+    // TODO: BAZAAR
+//    @Property(
+//        type = PropertyType.SWITCH, name = "Alert upon order update",
+//        description = "Alerts the player, if their order is outdated or matched.",
+//        category = "Bazaar"
+//    )
+//    var alertWhenOrderUpdate: Boolean = false
+//
+//    @Property(
+//        type = PropertyType.SWITCH, name = "Alert periodically",
+//        description = "If `update upon order update` and this is enabled, it will periodically alert the player (every 2 minutes).",
+//        category = "Bazaar"
+//    )
+//    var alertOrderUpdatePeriodically: Boolean = false
 
     // MINING CATEGORY
     @Property(
@@ -133,13 +149,13 @@ object Config : Vigilant(
     )
     var findFairyGrotto: Boolean = false
 
-    // BESTIARY CATEGORY
-    @Property(
-        type = PropertyType.SWITCH, name = "Enable",
-        description = "Tracks all kills and counts them accordingly to your bestiary progress. §b§c(WIP, SOME KILLS MIGHT BE COUNTED)",
-        category = "Bestiary", subcategory = "Tracker"
-    )
-    var enableBestiaryTracker: Boolean = false
+    // TODO: BESTIARY CATEGORY
+//    @Property(
+//        type = PropertyType.SWITCH, name = "Enable",
+//        description = "Tracks all kills and counts them accordingly to your bestiary progress. §b§c(WIP, SOME KILLS MIGHT BE COUNTED)",
+//        category = "Bestiary", subcategory = "Tracker"
+//    )
+//    var enableBestiaryTracker: Boolean = false
 
     // DEV CATEGORY
     @Property(

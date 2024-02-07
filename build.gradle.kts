@@ -69,7 +69,7 @@ repositories {
     mavenCentral()
     maven("https://repo.spongepowered.org/maven/")
 
-    maven("https://repo.sk1er.club/repository/maven-public")
+    maven("https://repo.essential.gg/repository/maven-public")
 }
 
 val shadowImpl: Configuration by configurations.creating {
@@ -91,7 +91,8 @@ dependencies {
     }
     annotationProcessor("org.spongepowered:mixin:0.8.5-SNAPSHOT")
 
-    implementation("gg.essential:essential-1.8.9-forge:3662")
+    implementation("gg.essential:vigilance-1.8.9-forge:295")
+    implementation("gg.essential:elementa-1.8.9-forge:622")
 
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
     implementation("com.google.code.gson:gson:2.10.1")

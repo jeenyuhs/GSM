@@ -37,7 +37,7 @@ object Highlighter {
                         x - 0.5, y, z - 0.5,
                         x + 0.5, y - 2, z + 0.5
                     ),
-                    Color(0, 255, 0),
+                    GSM.config.highlightStarredMobsColor,
                     0.25f
                 )
             }
@@ -51,7 +51,7 @@ object Highlighter {
                         x - 0.5, y, z - 0.5,
                         x + 0.5, y + 2, z + 0.5
                     ),
-                    Color(118, 32, 185),
+                    GSM.config.highlightSAColor,
                     0.5f
                 )
             }
