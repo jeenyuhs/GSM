@@ -1,2 +1,2 @@
 # Glob's Skyblock Mod (GSM)
-A Hypixel Skyblock mod, that includes premium features.
+A Hypixel Skyblock mod, that includes features that the other mods I use, lack!
