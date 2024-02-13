@@ -52,6 +52,7 @@ object Drops {
                     .flicker(titleNoColor, 100f)
                     .fadeOut(200f)
             }
+
             if (GSM.config.copyRareDrops) {
                 GSM.minecraft.thePlayer.chat("${ChatColor.GOLD}[${ChatColor.YELLOW}GSM${ChatColor.GOLD}] ${ChatColor.DARK_GRAY}> ${ChatColor.GOLD}Added drop to clipboard!")
                 Toolkit.getDefaultToolkit().systemClipboard.setContents(StringSelection(event.message.unformattedText), null)

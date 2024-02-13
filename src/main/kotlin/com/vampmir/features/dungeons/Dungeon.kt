@@ -37,7 +37,8 @@ object Dungeon {
             InstantRequeue,
             LividSolver,
             Highlighter,
-            BalloonTimer
+            BalloonTimer,
+            UnlinkedArmorstand
         ).forEach(MinecraftForge.EVENT_BUS::register)
     }
 

@@ -5,7 +5,6 @@ import gg.essential.elementa.font.DefaultFonts
 import gg.essential.universal.UGraphics
 import gg.essential.universal.UMatrixStack
 import net.minecraft.client.gui.ScaledResolution
-import org.dom4j.util.StringUtils
 import java.awt.Color
 
 

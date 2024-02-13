@@ -52,7 +52,6 @@ object WrongBookCombiner {
             if (inventory.name != "Anvil")
                 return
 
-
             val left: ItemStack = inventory.getStackInSlot(29) ?: return
             val right: ItemStack = inventory.getStackInSlot(33) ?: return
 

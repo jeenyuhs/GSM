@@ -2,8 +2,7 @@ package com.vampmir.config
 
 import com.vampmir.GSM
 import gg.essential.vigilance.Vigilant
-import gg.essential.vigilance.data.Property
-import gg.essential.vigilance.data.PropertyType
+import gg.essential.vigilance.data.*
 import java.awt.Color
 import java.io.File
 
@@ -15,7 +14,7 @@ object Config : Vigilant(
     @Property(
         type = PropertyType.SWITCH, name = "Balloon Barrage Helper",
         description = "Right before Bonzo uses his Balloon Barrage attack, it'll alert the user. Once Bonzo is done using the attack, it'll notify the user.",
-        category = "Dungeons", subcategory = "Balloon (F1/M1)"
+        category = "Dungeons", subcategory = "Bonzo (F1/M1)"
     )
     var showBalloonTimer: Boolean = false
 
@@ -69,7 +68,21 @@ object Config : Vigilant(
     )
     var closeReward: Boolean = false
 
+    @Property(
+        type = PropertyType.SWITCH, name = "Fix Armorstand bug",
+        description = "If enabled, this will remove all armorstands that doesn't have a \"linked\" entity to it.",
+        category = "Dungeons", subcategory = "QOL"
+    )
+    var hideUselessArmorStands: Boolean = true
+
     // QOL CATEGORY
+    @Property(
+        type = PropertyType.SWITCH, name = "Remove breaking particles",
+        description = "Removing block breaking particles. This can help with FPS issues.",
+        category = "QOL"
+    )
+    var removeBreakingParticles: Boolean = false
+
     @Property(
         type = PropertyType.SWITCH, name = "Alert wrong book combination",
         description = "Alerts the player,when they're about to combine two books together, that aren't the same.",
@@ -105,13 +118,6 @@ object Config : Vigilant(
     )
     var ignoredRareDrops: String = ""
 
-    @Property(
-        type = PropertyType.SWITCH, name = "Hide ignored drops messages",
-        description = "When enabled, all the drops from `Ignored drops` will no longer show in chat.",
-        category = "QOL", subcategory = "Drops"
-    )
-    var hideIgnoredDropsMessages: Boolean = false
-
     // TODO: BAZAAR
 //    @Property(
 //        type = PropertyType.SWITCH, name = "Alert upon order update",
@@ -134,6 +140,13 @@ object Config : Vigilant(
         category = "Mining", subcategory = "Crystal Hollows"
     )
     var enableTreasureESP: Boolean = false
+
+    @Property(
+        type = PropertyType.SWITCH, name = "Hide ignored drops messages",
+        description = "When enabled, all the drops from `Ignored drops` will no longer show in chat.",
+        category = "QOL", subcategory = "Drops"
+    )
+    var hideIgnoredDropsMessages: Boolean = false
 
     @Property(
         type = PropertyType.SWITCH, name = "Ignore useless treasure messages",

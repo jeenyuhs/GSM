@@ -78,6 +78,7 @@ val shadowImpl: Configuration by configurations.creating {
 
 dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
 
     minecraft("com.mojang:minecraft:1.8.9")
     mappings("de.oceanlabs.mcp:mcp_stable:22-1.8.9")
