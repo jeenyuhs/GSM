@@ -5,6 +5,8 @@ A Hypixel Skyblock mod, that includes features that the other mods I use, lack!
 Lost interest playing Hypixel Skyblock, so this is getting published in it's current and broken state.
 I might regain the interest and continue development.
 
+There won't be any published builds, so you'd have to manually build it yourself.
+
 ## Features
 * starred dungeon mob highlighter
 * automatically close dungeon rewards
